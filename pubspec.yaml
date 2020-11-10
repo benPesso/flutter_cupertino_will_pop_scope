@@ -1,0 +1,18 @@
+name: cupertino_will_pop_scope
+description: This package extends the default iOS page transition to support the invocation of `onWillPop` in a [WillPopScope] widget.
+version: 1.0.0
+repository: https://github.com/benPesso/flutter_cupertino_will_pop_scope
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
