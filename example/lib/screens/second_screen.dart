@@ -1,3 +1,4 @@
+import 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
 import 'package:flutter/material.dart';
 
 class SecondScreen extends StatefulWidget {
@@ -35,10 +36,9 @@ class _SecondScreenState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      // Remeber to set `onWillPop` to `null` when not needed!
-      onWillPop: _hasChanges ? _onWillPop : null,
-
+    return ConditionalWillPopScope(
+      onWillPop: _onWillPop,
+      shouldAddCallbacks: _hasChanges,
       child: Scaffold(
         appBar: AppBar(title: Text('Second Screen'), backgroundColor: _color),
         body: Center(

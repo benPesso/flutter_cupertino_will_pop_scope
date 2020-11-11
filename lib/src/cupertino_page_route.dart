@@ -16,7 +16,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/animation.dart' show Curves;
 
 const double _kBackGestureWidth = 20.0;
-final double _kMaxSwipeDistance = 1 / 3; // Portion of screen width.
+final double _kMaxSwipeDistance = 0.42; // Portion of screen width that can be dragged.
 const double _kMinFlingVelocity = 1.0; // Screen widths per second.
 
 // An eyeballed value for the maximum time it takes for a page to animate forward
@@ -279,11 +279,14 @@ class CupertinoPageRoute<T> extends PageRoute<T> {
   }
 
   // Called by _CupertinoBackGestureDetector when a pop ("back") drag start
-  // gesture is detected. The returned controller handles all of the subsequent
-  // drag events.
+  // gesture is detected. It reutrns the `willPop` callback of the route.
+  // The callback is wrapped in a delay to account for the "rewind" animation.
   static Future<RoutePopDisposition> Function() _getRouteWillPopCallbacks<T>(
       PageRoute<T> route) {
-    return (route.hasScopedWillPopCallback) ? route.willPop : null;
+    return (route.hasScopedWillPopCallback)
+        ? () => Future.delayed(Duration(milliseconds: 60))
+            .then((_) => route.willPop())
+        : null;
   }
 
   /// Returns a [CupertinoFullscreenDialogTransition] if [route] is a full

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'cupertino_page_route.dart';
 
-class CupertinoWillPopScopePageTransionsBuilder
-    extends PageTransitionsBuilder {
+class CupertinoWillPopScopePageTransionsBuilder extends PageTransitionsBuilder {
   const CupertinoWillPopScopePageTransionsBuilder();
 
   @override
