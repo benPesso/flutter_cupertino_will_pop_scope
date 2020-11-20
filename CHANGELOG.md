@@ -1,3 +1,8 @@
+## [1.0.2]
+
+- Fixed Flutter's own asserts, which fail Pub.dev's static analysis.
+- Updated the package description.
+
 ## [1.0.1]
 
 - Introduced a new `ConditionalWillPopScope` widget which makes it possible to add `willPop` callbacks conditionally.
