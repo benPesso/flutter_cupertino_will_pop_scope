@@ -1,3 +1,7 @@
+## [1.0.3]
+
+- Fixed formatting.
+
 ## [1.0.2]
 
 - Fixed Flutter's own asserts, which fail Pub.dev's static analysis.

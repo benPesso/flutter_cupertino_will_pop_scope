@@ -27,7 +27,8 @@ class ConditionalWillPopScope extends StatefulWidget {
   final bool shouldAddCallbacks;
 
   @override
-  _ConditionalWillPopScopeState createState() => _ConditionalWillPopScopeState();
+  _ConditionalWillPopScopeState createState() =>
+      _ConditionalWillPopScopeState();
 }
 
 class _ConditionalWillPopScopeState extends State<ConditionalWillPopScope> {

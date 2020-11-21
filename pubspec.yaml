@@ -1,6 +1,6 @@
 name: cupertino_will_pop_scope
 description: This package enables the 'onWillPop' callback on Cupertino page transitions. It also introduces a new EnhancedWillPopScope widget.
-version: 1.0.2
+version: 1.0.3
 repository: https://github.com/benPesso/flutter_cupertino_will_pop_scope
 
 environment:
