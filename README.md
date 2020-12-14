@@ -43,7 +43,7 @@ theme = ThemeData(
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       TargetPlatform.android: ZoomPageTransitionsBuilder(),
-      TargetPlatform.iOS: CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
+      TargetPlatform.iOS: CupertinoWillPopScopePageTransionsBuilder(),
     },
   ),
 );
