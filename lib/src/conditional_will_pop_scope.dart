@@ -7,9 +7,9 @@ class ConditionalWillPopScope extends StatefulWidget {
   ///
   /// The `child` and `shouldAddCallbacks` arguments must not be `null`.
   const ConditionalWillPopScope({
-    Key key,
-    @required this.child,
-    @required this.onWillPop,
+    Key? key,
+    required this.child,
+    required this.onWillPop,
     this.shouldAddCallbacks,
   })  : assert(child != null),
         super(key: key);
@@ -24,7 +24,7 @@ class ConditionalWillPopScope extends StatefulWidget {
   final WillPopCallback onWillPop;
 
   /// Determines if the `onWillPop` callback should be added to the enclosing [ModalRoute].
-  final bool shouldAddCallbacks;
+  final bool? shouldAddCallbacks;
 
   @override
   _ConditionalWillPopScopeState createState() =>
@@ -32,7 +32,7 @@ class ConditionalWillPopScope extends StatefulWidget {
 }
 
 class _ConditionalWillPopScopeState extends State<ConditionalWillPopScope> {
-  ModalRoute<dynamic> _route;
+  ModalRoute<dynamic>? _route;
 
   @override
   void didChangeDependencies() {
@@ -40,7 +40,7 @@ class _ConditionalWillPopScopeState extends State<ConditionalWillPopScope> {
     if (widget.onWillPop != null)
       _route?.removeScopedWillPopCallback(widget.onWillPop);
     _route = ModalRoute.of(context);
-    if (widget.onWillPop != null && widget.shouldAddCallbacks)
+    if (widget.onWillPop != null && widget.shouldAddCallbacks!)
       _route?.addScopedWillPopCallback(widget.onWillPop);
   }
 
@@ -52,9 +52,9 @@ class _ConditionalWillPopScopeState extends State<ConditionalWillPopScope> {
         (widget.onWillPop != oldWidget.onWillPop ||
             widget.shouldAddCallbacks != oldWidget.shouldAddCallbacks)) {
       if (oldWidget.onWillPop != null)
-        _route.removeScopedWillPopCallback(oldWidget.onWillPop);
-      if (widget.onWillPop != null && widget.shouldAddCallbacks)
-        _route.addScopedWillPopCallback(widget.onWillPop);
+        _route!.removeScopedWillPopCallback(oldWidget.onWillPop);
+      if (widget.onWillPop != null && widget.shouldAddCallbacks!)
+        _route!.addScopedWillPopCallback(widget.onWillPop);
     }
   }
 
