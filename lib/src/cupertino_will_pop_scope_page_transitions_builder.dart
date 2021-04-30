@@ -13,7 +13,7 @@ class CupertinoWillPopScopePageTransionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return CupertinoPageRoute.buildPageTransitions<T>(
+    return CupertinoRouteTransitionMixin.buildPageTransitions<T>(
         route, context, animation, secondaryAnimation, child);
   }
 }

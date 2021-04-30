@@ -5,14 +5,13 @@ class ConditionalWillPopScope extends StatefulWidget {
   /// Creates a widget that registers a callback to veto attempts by the user to
   /// dismiss the enclosing [ModalRoute].
   ///
-  /// The `child` and `shouldAddCallbacks` arguments must not be `null`.
+  /// The `child` argument must not be `null`.
   const ConditionalWillPopScope({
     Key? key,
     required this.child,
-    required this.onWillPop,
+    this.onWillPop,
     this.shouldAddCallbacks,
-  })  : assert(child != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// The widget below this widget in the tree.
   final Widget child;
@@ -21,7 +20,7 @@ class ConditionalWillPopScope extends StatefulWidget {
   ///
   /// If the callback returns a [Future] that resolves to `false`, the enclosing
   /// route will not be popped.
-  final WillPopCallback onWillPop;
+  final WillPopCallback? onWillPop;
 
   /// Determines if the `onWillPop` callback should be added to the enclosing [ModalRoute].
   final bool? shouldAddCallbacks;
@@ -38,10 +37,10 @@ class _ConditionalWillPopScopeState extends State<ConditionalWillPopScope> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (widget.onWillPop != null)
-      _route?.removeScopedWillPopCallback(widget.onWillPop);
+      _route?.removeScopedWillPopCallback(widget.onWillPop!);
     _route = ModalRoute.of(context);
-    if (widget.onWillPop != null && widget.shouldAddCallbacks!)
-      _route?.addScopedWillPopCallback(widget.onWillPop);
+    if (widget.onWillPop != null && widget.shouldAddCallbacks == true)
+      _route?.addScopedWillPopCallback(widget.onWillPop!);
   }
 
   @override
@@ -52,16 +51,16 @@ class _ConditionalWillPopScopeState extends State<ConditionalWillPopScope> {
         (widget.onWillPop != oldWidget.onWillPop ||
             widget.shouldAddCallbacks != oldWidget.shouldAddCallbacks)) {
       if (oldWidget.onWillPop != null)
-        _route!.removeScopedWillPopCallback(oldWidget.onWillPop);
-      if (widget.onWillPop != null && widget.shouldAddCallbacks!)
-        _route!.addScopedWillPopCallback(widget.onWillPop);
+        _route?.removeScopedWillPopCallback(oldWidget.onWillPop!);
+      if (widget.onWillPop != null && widget.shouldAddCallbacks == true)
+        _route?.addScopedWillPopCallback(widget.onWillPop!);
     }
   }
 
   @override
   void dispose() {
     if (widget.onWillPop != null)
-      _route?.removeScopedWillPopCallback(widget.onWillPop);
+      _route?.removeScopedWillPopCallback(widget.onWillPop!);
     super.dispose();
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -12,9 +13,11 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('CupertinoWillPopScope Demo')),
       body: Center(
-        child: RaisedButton(
-          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-          child: Text('Go to second screen'),
+        child: ElevatedButton(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+            child: Text('Go to second screen'),
+          ),
           onPressed: () => _goToSecondScreen(context),
         ),
       ),

@@ -1,3 +1,10 @@
+## [1.1.0]
+
+- Updated with latest version of Flutter's `route.dart` file.
+- Update sample app to use `ElevatedButton` instead of the deprecated `RaisedButton` widget.
+- Changed `ConditionalWillPopScope.onWillPop` to be optional.
+- Migrated to Null Safety.
+
 ## [1.0.4]
 
 - Fixed documentation.
