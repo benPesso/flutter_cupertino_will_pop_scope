@@ -88,4 +88,4 @@ Widget build(BuildContext context) {
 }
 ```
 
-> :warning: When using Flutter's `WillPopScope` widget, the  `onWillPop` must be set conditionally. Otherwise, the "swipe to go back" gesture may not work properly. In the example above, this is achieved by using `_hasChanges` as the condition.
+> :warning: When using Flutter's `WillPopScope` widget, the `onWillPop` must be set conditionally. Otherwise, the "swipe to go back" gesture will be cancelled. In the example above, this is achieved by using `_hasChanges` as the condition.

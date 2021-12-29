@@ -38,7 +38,7 @@ class _SecondScreenState extends State<SecondScreen> {
   Widget build(BuildContext context) {
     return ConditionalWillPopScope(
       onWillPop: _onWillPop,
-      shouldAddCallbacks: _hasChanges,
+      shouldAddCallback: _hasChanges,
       child: Scaffold(
         appBar: AppBar(title: Text('Second Screen'), backgroundColor: _color),
         body: Center(

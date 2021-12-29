@@ -9,8 +9,8 @@ class ConditionalWillPopScope extends StatefulWidget {
   const ConditionalWillPopScope({
     Key? key,
     required this.child,
-    this.onWillPop,
-    this.shouldAddCallbacks,
+    required this.onWillPop,
+    required this.shouldAddCallback,
   }) : super(key: key);
 
   /// The widget below this widget in the tree.
@@ -23,7 +23,7 @@ class ConditionalWillPopScope extends StatefulWidget {
   final WillPopCallback? onWillPop;
 
   /// Determines if the `onWillPop` callback should be added to the enclosing [ModalRoute].
-  final bool? shouldAddCallbacks;
+  final bool shouldAddCallback;
 
   @override
   _ConditionalWillPopScopeState createState() =>
@@ -36,23 +36,34 @@ class _ConditionalWillPopScopeState extends State<ConditionalWillPopScope> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.onWillPop != null)
+
+    if (widget.onWillPop != null) {
+      // Remove callback from the "old" route.
       _route?.removeScopedWillPopCallback(widget.onWillPop!);
-    _route = ModalRoute.of(context);
-    if (widget.onWillPop != null && widget.shouldAddCallbacks == true)
-      _route?.addScopedWillPopCallback(widget.onWillPop!);
+
+      // Update the reference to the "current" route.
+      _route = ModalRoute.of(context);
+
+      // Add the callbacks to the new "current" route.
+      if (widget.shouldAddCallback)
+        _route?.addScopedWillPopCallback(widget.onWillPop!);
+    }
   }
 
   @override
   void didUpdateWidget(ConditionalWillPopScope oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     assert(_route == ModalRoute.of(context));
-    if (_route != null &&
-        (widget.onWillPop != oldWidget.onWillPop ||
-            widget.shouldAddCallbacks != oldWidget.shouldAddCallbacks)) {
+
+    if (widget.onWillPop != oldWidget.onWillPop ||
+        widget.shouldAddCallback != oldWidget.shouldAddCallback) {
+      // Remove callbacks of the old widget state.
       if (oldWidget.onWillPop != null)
         _route?.removeScopedWillPopCallback(oldWidget.onWillPop!);
-      if (widget.onWillPop != null && widget.shouldAddCallbacks == true)
+
+      // Add callbacks of the new widget state.
+      if (widget.onWillPop != null && widget.shouldAddCallback)
         _route?.addScopedWillPopCallback(widget.onWillPop!);
     }
   }

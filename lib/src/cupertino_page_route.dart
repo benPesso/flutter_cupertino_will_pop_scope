@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 const double _kBackGestureWidth = 20.0;
 final double _kMaxSwipeDistance = 0.42; // As portion of screen.
@@ -247,15 +246,10 @@ mixin CupertinoRouteTransitionMixin<T> on PageRoute<T> {
   }
 
   //// Called by _CupertinoBackGestureDetector when a pop ("back") drag start
-  //// gesture is detected. It reutrns the `willPop` callback of the route.
-  //// The callback is wrapped in a delay to account for the "rewind" animation.
+  //// gesture is detected. It reutrns the route's `willPop` callback(s).
   static Future<RoutePopDisposition> Function()? _getRouteWillPopCallbacks<T>(
-      PageRoute<T> route) {
-    return (route.hasScopedWillPopCallback)
-        ? () => Future.delayed(Duration(milliseconds: 60))
-            .then((_) => route.willPop())
-        : null;
-  }
+          PageRoute<T> route) =>
+      (route.hasScopedWillPopCallback) ? route.willPop : null;
 
   // Called by _CupertinoBackGestureDetector when a pop ("back") drag start
   // gesture is detected. The returned controller handles all of the subsequent
@@ -393,7 +387,7 @@ class _PageBasedCupertinoPageRoute<T> extends PageRoute<T>
     with CupertinoRouteTransitionMixin<T> {
   _PageBasedCupertinoPageRoute({
     required CupertinoPage<T> page,
-  })   : assert(page != null),
+  })  : assert(page != null),
         super(settings: page) {
     assert(opaque);
   }
@@ -484,7 +478,7 @@ class CupertinoPageTransition extends StatelessWidget {
     required Animation<double> secondaryRouteAnimation,
     required this.child,
     required bool linearTransition,
-  })   : assert(linearTransition != null),
+  })  : assert(linearTransition != null),
         _primaryPositionAnimation = (linearTransition
                 ? primaryRouteAnimation
                 : CurvedAnimation(
@@ -564,7 +558,7 @@ class CupertinoFullscreenDialogTransition extends StatelessWidget {
     required Animation<double> secondaryRouteAnimation,
     required this.child,
     required bool linearTransition,
-  })   : _positionAnimation = CurvedAnimation(
+  })  : _positionAnimation = CurvedAnimation(
           parent: primaryRouteAnimation,
           curve: Curves.linearToEaseOut,
           // The curve must be flipped so that the reverse animation doesn't play
@@ -622,7 +616,7 @@ class _CupertinoBackGestureDetector<T> extends StatefulWidget {
     required this.getWillPopCallback,
     required this.onStartPopGesture,
     required this.child,
-  })   : assert(enabledCallback != null),
+  })  : assert(enabledCallback != null),
         assert(getWillPopCallback != null),
         assert(onStartPopGesture != null),
         assert(child != null),
@@ -647,7 +641,7 @@ class _CupertinoBackGestureDetectorState<T>
 
   late HorizontalDragGestureRecognizer _recognizer;
 
-  Function()? _willPopCallback;
+  Future<RoutePopDisposition> Function()? _willPopCallback;
 
   @override
   void initState() {
@@ -675,14 +669,15 @@ class _CupertinoBackGestureDetectorState<T>
   void _handleDragUpdate(DragUpdateDetails details) {
     assert(mounted);
     // assert(_backGestureController != null);
-    if (_willPopCallback == null ||
-        details.globalPosition.dx < context.size!.width * _kMaxSwipeDistance) {
-      _backGestureController?.dragUpdate(
-          _convertToLogical(details.primaryDelta! / context.size!.width));
-    } else {
+
+    if (_willPopCallback != null &&
+        details.globalPosition.dx > context.size!.width * _kMaxSwipeDistance) {
       _willPopCallback!();
-      _handleDragEnd(DragEndDetails());
+      _handleDragCancel();
     }
+
+    _backGestureController?.dragUpdate(
+        _convertToLogical(details.primaryDelta! / context.size!.width));
   }
 
   void _handleDragEnd(DragEndDetails details) {
@@ -690,6 +685,7 @@ class _CupertinoBackGestureDetectorState<T>
     // assert(_backGestureController != null);
     _backGestureController?.dragEnd(_convertToLogical(
         details.velocity.pixelsPerSecond.dx / context.size!.width));
+
     _backGestureController = null;
     _willPopCallback = null;
   }
@@ -762,7 +758,7 @@ class _CupertinoBackGestureController<T> {
   _CupertinoBackGestureController({
     required this.navigator,
     required this.controller,
-  })   : assert(navigator != null),
+  })  : assert(navigator != null),
         assert(controller != null) {
     navigator.didStartUserGesture();
   }

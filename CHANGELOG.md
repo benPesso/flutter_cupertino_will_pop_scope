@@ -1,3 +1,8 @@
+## [1.2.0]
+- [BREAKING] Renamed `ConditionalWillPopScope`'s `shouldAddCallbacks` to `shouldAddCallback`.
+- Changed all properties of `ConditionalWillPopScope` to be required.
+- Changed the logic for dismissing the swipe back gesture on iOS to use the "drag cancelled" handler, instead of the "darg ended" handler.
+
 ## [1.1.0]
 
 - Updated with latest version of Flutter's `route.dart` file.
