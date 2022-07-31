@@ -1,3 +1,5 @@
+## [1.2.1]
+- Merged with latest version of Flutter's `cupertino_page_route.dart`.
 ## [1.2.0]
 - [BREAKING] Renamed `ConditionalWillPopScope`'s `shouldAddCallbacks` to `shouldAddCallback`.
 - Changed all properties of `ConditionalWillPopScope` to be required.
